@@ -57,7 +57,7 @@ exports.addTransaction = async (req, res) => {
                 credit,
                 title,
                 description,
-                balance: balance + amount,
+                balance: credit ? balance + amount : balance - amount,
                 amount,
               },
             ],
