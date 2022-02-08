@@ -32,7 +32,7 @@ exports.addTransaction = async (req, res) => {
         fullTextDate = fullTextDate.replace(key, val);
       }
 
-      return `${fullTextDate.toLowerCase()} ${ordinalSuffix(new Date().getDay())}`;
+      return `${fullTextDate.toLowerCase()} ${ordinalSuffix(new Date().getDate())}`;
     };
 
     await Transaction.create({
