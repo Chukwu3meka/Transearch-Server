@@ -1,9 +1,9 @@
-const { Transaction } = require("../models");
+const { Transaction, Company } = require("../models");
 const { catchError, ordinalSuffix } = require("../utils/serverFunctions");
 
 exports.addTransaction = async (req, res) => {
   try {
-    const { title, amount, description, credit, balance } = req.body;
+    const { title, amount, description, credit, balance, name } = req.body;
 
     const dateReplacer = () => {
       let fullTextDate = new Date().toDateString();
@@ -46,7 +46,33 @@ exports.addTransaction = async (req, res) => {
       },
     });
 
-    res.status(200).json("success");
+    await Company.updateOne(
+      { name },
+      {
+        $inc: { balance: credit ? amount : -amount },
+        $push: {
+          lastTransactions: {
+            $each: [
+              {
+                credit,
+                title,
+                description,
+                balance: balance + amount,
+                amount,
+              },
+            ],
+            $slice: 2,
+            $position: 0,
+          },
+        },
+      }
+    );
+
+    const companyData = await Company.findOne({ name });
+
+    const { lastTransactions } = companyData;
+
+    res.status(200).json(lastTransactions);
   } catch (err) {
     return catchError({ res, err, message: "unable to locate masses" });
   }
