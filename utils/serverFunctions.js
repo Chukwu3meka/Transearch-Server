@@ -22,3 +22,33 @@ module.exports.shuffleArray = (arr = []) => {
 
 // ordinal suffix
 module.exports.ordinalSuffix = (n) => n + (n + 0 ? ["th", "st", "nd", "rd"][(n > 3 && n < 21) || n % 10 > 3 ? 0 : n % 10] : "");
+
+module.exports.dateReplacer = (credit) => {
+  let fullTextDate = new Date().toDateString();
+
+  for (const [key, val] of Object.entries({
+    Jan: "January",
+    Feb: "February",
+    Mar: "March",
+    Apr: "April",
+    Jun: "June",
+    Jul: "July",
+    Aug: "August",
+    Sep: "September",
+    Oct: "October",
+    Nov: "November",
+    Dec: "December",
+
+    Mon: "Monday",
+    Tue: "Tuesday",
+    Wed: "Wednesday",
+    Thu: "Thursday",
+    Fri: "Friday",
+    Sat: "Saturday",
+    Sun: "Sunday",
+  })) {
+    fullTextDate = fullTextDate.replace(key, val);
+  }
+
+  return `${fullTextDate.toLowerCase()} ${ordinalSuffix(new Date().getDate())} ${credit ? "credit" : "debit"}`;
+};
