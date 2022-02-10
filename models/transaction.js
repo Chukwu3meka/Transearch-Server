@@ -8,10 +8,8 @@ const TransactionSchema = new Schema({
   company: { type: String, required: true },
   balance: { type: Number, required: true },
   description: { type: String, default: null },
-  date: {
-    fullTextDate: { type: String },
-    timeStamp: { type: Date, default: Date.now },
-  },
+  date: { type: Date, default: Date.now },
+  keywords: { type: String },
 });
 
 module.exports = mongoose.model("transaction", TransactionSchema, "transaction");

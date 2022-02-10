@@ -12,9 +12,7 @@ exports.addTransaction = async (req, res) => {
       description,
       company: id,
       balance: balance + amount,
-      date: {
-        fullTextDate: dateReplacer(credit),
-      },
+      keywords: dateReplacer({ credit, balance, amount }),
     });
 
     await Company.updateOne(
@@ -45,9 +43,9 @@ exports.addTransaction = async (req, res) => {
   }
 };
 
-exports.searchTransaction = async (req, res) => {
+exports.atlasSearchTransaction = async (req, res) => {
   try {
-    const { searchPhrase } = req.body;
+    const { searchPhrase, company } = req.body;
 
     // searchPhrase
 
@@ -56,7 +54,7 @@ exports.searchTransaction = async (req, res) => {
         $search: {
           text: {
             query: searchPhrase,
-            path: ["title", "date.fullTextDate", "description", "amount", "balance"],
+            path: ["title", "keywords", "description"],
             fuzzy: {},
           },
         },
@@ -64,7 +62,7 @@ exports.searchTransaction = async (req, res) => {
       {
         $project: {
           title: 1,
-          "date.timeStamp": 2,
+          date: 1,
           description: 1,
           credit: 1,
           amount: 1,
@@ -92,6 +90,17 @@ exports.searchTransaction = async (req, res) => {
         res.status(200).json(searchResult);
       }
     });
+  } catch (err) {
+    return catchError({ res, err, message: "unable to locate masses" });
+  }
+};
+
+exports.defaultSearchTransaction = async (req, res) => {
+  try {
+    const { searchPhrase, company } = req.body;
+
+    const result = await Transaction.find({ company });
+    res.status(200).json(result);
   } catch (err) {
     return catchError({ res, err, message: "unable to locate masses" });
   }

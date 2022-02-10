@@ -1,4 +1,4 @@
-const { Company } = require("../models");
+const { Company, Transaction } = require("../models");
 const { catchError } = require("../utils/serverFunctions");
 
 exports.signup = async (req, res) => {
@@ -28,6 +28,7 @@ exports.signin = async (req, res) => {
 
     const validCredentials = await profile.comparePassword(password);
     if (!validCredentials) throw "invalid credentials";
+
     const { _id: id } = profile;
 
     res.status(200).json(id);

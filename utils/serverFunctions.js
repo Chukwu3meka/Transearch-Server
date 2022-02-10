@@ -23,7 +23,7 @@ module.exports.shuffleArray = (arr = []) => {
 // ordinal suffix
 module.exports.ordinalSuffix = (n) => n + (n + 0 ? ["th", "st", "nd", "rd"][(n > 3 && n < 21) || n % 10 > 3 ? 0 : n % 10] : "");
 
-module.exports.dateReplacer = (credit) => {
+module.exports.dateReplacer = ({ credit, balance, amount }) => {
   let fullTextDate = new Date().toDateString();
 
   for (const [key, val] of Object.entries({
@@ -50,5 +50,11 @@ module.exports.dateReplacer = (credit) => {
     fullTextDate = fullTextDate.replace(key, val);
   }
 
-  return `${fullTextDate.toLowerCase()} ${this.ordinalSuffix(new Date().getDate())} ${credit ? "credit" : "debit"}`;
+  return `
+  ${fullTextDate.toLowerCase()}
+  ${this.ordinalSuffix(new Date().getDate())} 
+  ${credit ? "credit" : "debit"} 
+  ${amount.toString()}
+  ${balance.toString()}
+  `;
 };
