@@ -9,6 +9,7 @@ This is a Express.js server created to deliver API to Transearch. This is a basi
 3. MongoDB: MongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas. MongoDB is developed by MongoDB Inc. and licensed under the Server Side Public License - [Mongo DB](https://docs.mongodb.com/)
 
 - [A live preview of the client app](https://transearch.vercel.app/)
+- [Read on Medium](https://viewcrunch.medium.com/a-practical-example-using-mongodb-atlas-search-144ab2d4ed78)
 
 Usage
 `npm i` || `npm install`
