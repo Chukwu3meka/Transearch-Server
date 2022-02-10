@@ -14,13 +14,16 @@ Usage
 `npm i` || `npm install`
 
 Update the .env file as follows
+
 .env
 
-    `
-    MONGODB_URI="mongodb+srv://<user>:<pass>@cluster0.6yavq.mongodb.net/<db>?retryWrites=true&w=majority"
-
+```
+MONGODB_URI="mongodb+srv://<user>:<pass>@cluster0.6yavq.mongodb.net/<db>?retryWrites=true&w=majority"
 PORT = 5000
-`
+```
+
+1. Replace pass, user, and db with your own values
+2. Do not add PORT env to production
 
 MongoDB
 Open "config/keys.js" and add your MongoDB URI, local or Atlas

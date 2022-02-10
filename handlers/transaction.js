@@ -47,8 +47,6 @@ exports.atlasSearchTransaction = async (req, res) => {
   try {
     const { searchPhrase, company } = req.body;
 
-    // searchPhrase
-
     const agg = [
       {
         $search: {
@@ -65,6 +63,7 @@ exports.atlasSearchTransaction = async (req, res) => {
           date: 1,
           description: 1,
           credit: 1,
+          company: 1,
           amount: 1,
           balance: 1,
           score: {
@@ -73,7 +72,17 @@ exports.atlasSearchTransaction = async (req, res) => {
         },
       },
       {
-        $limit: 10,
+        $match: {
+          company,
+        },
+      },
+      // {
+      //   $sort: {
+      //     _id: -1,
+      //   },
+      // },
+      {
+        $limit: 2,
       },
     ];
 
@@ -91,9 +100,9 @@ exports.atlasSearchTransaction = async (req, res) => {
 
 exports.defaultSearchTransaction = async (req, res) => {
   try {
-    const { searchPhrase, company } = req.body;
+    const { company } = req.body;
 
-    const result = await Transaction.find({ company });
+    const result = await Transaction.find({ company }).sort({ _id: -1 });
     res.status(200).json(result);
   } catch (err) {
     return catchError({ res, err, message: "unable to locate masses" });
