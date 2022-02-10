@@ -76,13 +76,13 @@ exports.atlasSearchTransaction = async (req, res) => {
           company,
         },
       },
-      // {
-      //   $sort: {
-      //     _id: -1,
-      //   },
-      // },
       {
-        $limit: 2,
+        $sort: {
+          _id: -1,
+        },
+      },
+      {
+        $limit: 10,
       },
     ];
 
