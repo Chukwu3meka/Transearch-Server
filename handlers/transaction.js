@@ -1,15 +1,16 @@
 const { Transaction, Company } = require("../models");
-const { catchError, ordinalSuffix, dateReplacer } = require("../utils/serverFunctions");
+const { catchError, dateReplacer } = require("../utils/serverFunctions");
 
 exports.addTransaction = async (req, res) => {
   try {
-    const { title, amount, description, credit, balance, name } = req.body;
+    const { title, amount, description, credit, balance, name, id } = req.body;
 
     await Transaction.create({
       title,
       amount,
-      description,
       credit,
+      description,
+      company: id,
       balance: balance + amount,
       date: {
         fullTextDate: dateReplacer(credit),

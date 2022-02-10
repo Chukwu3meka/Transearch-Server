@@ -50,5 +50,5 @@ module.exports.dateReplacer = (credit) => {
     fullTextDate = fullTextDate.replace(key, val);
   }
 
-  return `${fullTextDate.toLowerCase()} ${ordinalSuffix(new Date().getDate())} ${credit ? "credit" : "debit"}`;
+  return `${fullTextDate.toLowerCase()} ${this.ordinalSuffix(new Date().getDate())} ${credit ? "credit" : "debit"}`;
 };
