@@ -77,12 +77,6 @@ exports.atlasSearchTransaction = async (req, res) => {
       },
     ];
 
-    // MongoClient.connect(
-    //   '',
-    //   { useNewUrlParser: true, useUnifiedTopology: true },
-    //   function(connectErr, client) {
-    //     assert.equal(null, connectErr);
-    //     const coll = client.db('').collection('');
     await Transaction.aggregate(agg, (err, searchResult) => {
       if (err) {
         throw err;
